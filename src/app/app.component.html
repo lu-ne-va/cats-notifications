@@ -1,0 +1,102 @@
+<!--<h3>Интервалы:</h3>
+<div class="input-group">
+  <input type="number" [(ngModel)]="workTime">
+  <label>Время работы</label>
+</div>
+<div class="input-group">
+  <input type="number" [(ngModel)]="restTime">
+  <label>Время отдыха</label>
+</div>
+
+<h1 *ngIf="mainText">{{mainText}}</h1>
+<h2 *ngIf="mainText">Wait for {{nextState}}: {{timeForNextState.getMinutes()}} minutes {{timeForNextState.getSeconds()}} seconds </h2>
+
+<div>
+  <button (click)="startCount()">{{buttonText}}</button>
+</div>-->
+
+<div class="content">
+  <div class="content__edit-block">
+
+      <button (click)="createNotification()" title="Create new notification" class="btn"
+        *ngIf="!editableNotification">
+        <i class="material-icons">add</i>
+      </button>
+
+      <form name="notification" class="form" (submit)="updateNotification($event, editableNotification.id)" *ngIf="editableNotification">
+
+        <div class="form__content">
+          <div class="form__input-group">
+            <label >Duration in minutes</label>
+            <input type="number" [(ngModel)]="editableNotification.minutes" name="time" required>
+          </div>
+          <div class="form__input-group">
+            <label >Text</label>
+            <input type="text" [(ngModel)]="editableNotification.text" name="text" required>
+          </div>
+          <div class="form__input-group">
+            <label >Image url</label>
+            <input type="text" [(ngModel)]="editableNotification.imageUrl" name="image-url" required>
+          </div>
+          <div>
+            <button type="submit" class="form__button btn" title="Save">
+              <i class="material-icons">done</i>
+            </button>
+            <button type="button" class="form__button btn"
+                (click)="cancelEditNotification()"
+                title="Cancel">
+              <i class="material-icons">clear</i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form__image-preview">
+          <img [src]="editableNotification.imageUrl" alt="" *ngIf="editableNotification.imageUrl">
+        </div>
+
+      </form>
+
+  </div>
+
+  <div class="content__list">
+    <div class="notification" *ngFor="let item of notificationList">
+      <div class="notification__alert-info" *ngIf="item.timer">
+        <span *ngIf='item.timeTillNextNotification.getMinutes() > 0'>next alert in {{item.timeTillNextNotification.getMinutes()}} minutes</span>
+        <span *ngIf='item.timeTillNextNotification.getMinutes() == 0'>next alert in less than a minute</span>
+      </div>
+      <div class="notification__text">{{item.text}}</div>
+      <div class="notification__duration"> repeats each<br>{{item.minutes}}  min</div>
+      <div class="notification__img">
+        <img [src]="item.imageUrl" alt="">
+      </div>
+      <div class="notification__controls">
+        <button (click)="editNotification(item.id)" [disabled]="item.timer" title="Edit" class="btn">
+          <i class="material-icons">create</i>
+        </button>
+        <button (click)="deleteNotification(item.id)" title="Delete" class="btn btn_delete">
+          <i class="material-icons">delete</i>
+        </button>
+        <button (click)="startTimer(item.id)" *ngIf="!item.timer" title="Start" class="btn">
+          <i class="material-icons">timer</i>
+        </button>
+        <button (click)="stopTimer(item.id)" *ngIf="item.timer" title="Stop" class="btn">
+          <i class="material-icons">timer_off</i>
+        </button>
+        <button (click)="resetTimer(item.id)" *ngIf="item.timer" title="Reset timer" class="btn">
+          <i class="material-icons">restore</i>
+        </button>
+      </div>
+    </div>
+
+    <div class="notification notification_no-records" *ngIf="!notificationList.length">
+      <p class="notification__text">You make cat sad....<br>There is nothing you want to be reminded about</p>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+

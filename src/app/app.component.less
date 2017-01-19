@@ -1,0 +1,157 @@
+
+.content {
+  padding: 2vh 2vw;
+  max-width: 1000px;
+  margin: auto;
+
+  &__edit-block {
+    margin-bottom: 20px;
+    text-align: right;
+  }
+
+  &__list {
+
+  }
+}
+
+
+.btn {
+  background-color: #bc4f9e;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  padding: 3px 16px;
+
+  & + & {
+    margin-left: 10px;
+  }
+
+  &:hover, &:active {
+    background-color: #835aa8;
+  }
+
+  &_delete {
+    background-color: #f04b4c;
+    &:hover, &:active {
+      background-color: darken(#f04b4c, 10%);
+    }
+  }
+
+  &[disabled] {
+    opacity: 0.6;
+  }
+
+}
+
+.form {
+  display: flex;
+
+  &__content {
+    width: 100%;
+    margin-right: 20px;
+  }
+
+  &__image-preview {
+
+    width: 40vw;
+
+    img {
+      max-width: 100%;
+      max-height: 140px;
+    }
+  }
+
+  &__input-group {
+    margin-bottom: 10px;
+    display: flex;
+    text-align: left;
+
+    label {
+      width: 100%;
+    }
+    input {
+      width: 400px;
+      border-radius: 5px;
+      outline: #835aa8;
+      padding: 6px;
+      font-size: 0.8rem;
+      border: 1px solid;
+    }
+  }
+}
+
+.notification {
+  position: relative;
+  display: flex;
+  border: 1px solid;
+  padding: 1rem;
+  margin-bottom: 6px;
+  border-radius: 5px;
+  box-shadow: 1px 2px 3px 0 rgba(74, 32, 95, 0.4);
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+
+  &_no-records {
+    background-image: url(http://iget.pw/m/images/meow_iconka/256x256/cat_eyes.png), url(http://37.media.tumblr.com/87f6afcad549820f61f3f252edc4a9ed/tumblr_miwms6qELP1qdyauqo2_500.gif);
+    filter: grayscale(100%);
+    background-size: auto 70%, auto 120%;
+    background-repeat: no-repeat, repeat-x;
+    background-position: right 30px center, center;
+    padding: 45px;
+  }
+
+  &__alert-info {
+    position: absolute;
+    bottom: 1rem;
+    font-style: italic;
+    font-family: "PT Sans";
+    color: #dae354;
+  }
+
+  &__controls {
+    flex-shrink: 0;
+    flex-basis: 8rem;
+
+    @media (max-width: 600px) {
+      flex-basis: 3rem;
+    }
+
+    .btn {
+      margin: 0 0 5px;
+
+    }
+
+  }
+
+  &__img {
+    margin-right: 6rem;
+    flex-shrink: 0;
+    flex-basis: 7rem;
+
+    @media (max-width: 600px) {
+      margin-bottom: 3rem;
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+
+  &__text {
+    width: 100%;
+    margin-right: 3rem;
+  }
+
+  &__duration {
+    margin-right: 3rem;
+    flex-shrink: 0;
+    flex-basis: 7rem;
+  }
+
+}
+
