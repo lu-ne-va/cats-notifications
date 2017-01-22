@@ -4,11 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import {DataService} from "./app.data.service";
+import { NotificationItem } from './notification/notification.component';
+import { DataService } from "./app.data.service";
+import { EditFormComponent } from './edit-form/edit-form.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NotificationItem,
+    EditFormComponent
   ],
   imports: [
     BrowserModule,

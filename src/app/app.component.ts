@@ -5,10 +5,7 @@ export interface iNotification {
   minutes: number,
   text: string,
   imageUrl: string,
-  id: number,
-  timeTillNextNotification: Date,
-  alertTime: Date,
-  timer: number
+  id: number
 }
 
 @Component({
@@ -24,109 +21,53 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.notificationList = this.dataService.getData();
+    if (Notification.permission != 'granted'){
+      this.askPermission();
+    }
+  }
+
+  askPermission() {
+    Notification.requestPermission(function (permission) {
+      if (permission === "granted") {
+        let notification = new Notification("Now you have kittens in your life!", {icon: 'http://allaboutwindowsphone.com/images/appicons/242381.png'});
+      }
+    })
   }
 
   emptyNotification: iNotification = {
     minutes: 0,
     text: '',
     imageUrl: '',
-    id: 0,
-    timeTillNextNotification: null,
-    alertTime: null,
-    timer: null
+    id: 0
   };
 
   editableNotification: iNotification;
-  savedCopyOfEditableNotification: iNotification;
   notificationList: iNotification[];
 
-  addNotificationToList() {
-    this.editableNotification.id = this.notificationList.reduce((a, b) => a > b.id ? a : b.id, 0) + 1;
-    this.notificationList.push(this.editableNotification);
-    this.savedCopyOfEditableNotification = null;
+  addNotificationToList(newNotification) {
+    newNotification.id = this.notificationList.reduce((a, b) => a > b.id ? a : b.id, 0) + 1;
+    this.notificationList.unshift(newNotification);
     this.editableNotification = null;
   }
 
-  editNotification(id) {
-    this.editableNotification = this.notificationList.find(elem => elem.id == id);
-    this.savedCopyOfEditableNotification = Object.assign({}, this.editableNotification);
+
+  saveNewNotification(newNotification) {
+    this.addNotificationToList(newNotification);
+    this.updateData();
   }
 
-  cancelEditNotification() {
-
-    if (this.editableNotification.id) {
-      this.editableNotification.minutes = this.savedCopyOfEditableNotification.minutes;
-      this.editableNotification.text = this.savedCopyOfEditableNotification.text;
-      this.editableNotification.imageUrl = this.savedCopyOfEditableNotification.imageUrl;
-    }
-
-    this.editableNotification = null;
-    this.savedCopyOfEditableNotification = null;
-
-  }
-
-  updateNotification(event, id) {
-    event.preventDefault();
-    if (id) {
-      this.savedCopyOfEditableNotification = null;
-      this.editableNotification = null;
-
-    } else {
-      this.addNotificationToList();
-    }
-
-    this.dataService.updateData(this.notificationList);
-  }
-
-  deleteNotification(id) {
-    let index = this.notificationList.indexOf(this.notificationList.find(elem => elem.id == id));
+  deleteNotification(notification) {
+    let index = this.notificationList.indexOf(this.notificationList.find(elem => elem.id == notification.id));
     this.notificationList.splice(index, 1);
-    this.dataService.updateData(this.notificationList);
+    this.updateData();
   }
 
   createNotification() {
     this.editableNotification = Object.assign({}, this.emptyNotification);
   }
 
-  startTimer(id){
-    this.runTimer(this.notificationList.find(elem => elem.id == id));
-
+  updateData(){
+    this.dataService.updateData(this.notificationList);
   }
-
-  runTimer(elem) {
-
-    let startTime = new Date();
-    elem.alertTime = new Date(new Date().setMinutes(startTime.getMinutes() + elem.minutes));
-    elem.timeTillNextNotification = new Date(elem.alertTime.getTime() - startTime.getTime());
-
-    elem.timer = setInterval(() => {
-      let currentTime = new Date();
-      if (currentTime >= elem.alertTime) {
-        let notification = new Notification(elem.text, {icon: elem.imageUrl});
-        elem.alertTime = new Date(new Date().setMinutes(currentTime.getMinutes() + elem.minutes));
-      } else {
-        elem.timeTillNextNotification = new Date(elem.alertTime.getTime() - currentTime.getTime());
-      }
-
-    }, 1000);
-
-
-  }
-
-  stopTimer(id){
-    let elem = this.notificationList.find(elem => elem.id == id);
-    clearInterval(elem.timer);
-    elem.timer = null;
-    elem.alertTime = null;
-    elem.timeTillNextNotification = null;
-  }
-
-  resetTimer(id){
-    this.stopTimer(id);
-    this.startTimer(id);
-
-
-  }
-
 
 }

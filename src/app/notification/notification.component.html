@@ -1,0 +1,45 @@
+<div class="card" [ngClass]="{turn: isTurned}">
+  <div class="notification">
+    <div class="notification__alert-info" *ngIf="timer">
+    <span *ngIf='timeTillNextNotification.getUTCMinutes() > 0 || timeTillNextNotification.getUTCHours() > 0'>
+      <span>next alert in </span>
+      <span *ngIf='timeTillNextNotification.getUTCHours() > 0'>{{timeTillNextNotification.getUTCHours()}} hours</span>
+      <span *ngIf='timeTillNextNotification.getMinutes() > 0'>{{timeTillNextNotification.getUTCMinutes()}} minutes</span>
+    </span>
+      <span *ngIf='timeTillNextNotification.getUTCMinutes() <= 0 && timeTillNextNotification.getUTCHours() < 1'>next alert in less than a minute</span>
+    </div>
+    <div class="notification__text">{{item.text}}</div>
+    <div class="notification__duration"> repeats each<br>{{item.minutes}}  min</div>
+    <div class="notification__img">
+      <img [src]="item.imageUrl" alt="">
+    </div>
+    <div class="notification__controls">
+      <button (click)="editNotification()" [disabled]="timer" title="Edit" class="btn">
+        <i class="material-icons">create</i>
+      </button>
+      <button (click)="deleteNotification()" title="Delete" class="btn btn_delete">
+        <i class="material-icons">delete</i>
+      </button>
+      <button (click)="startTimer(item.id)" *ngIf="!timer" title="Start" class="btn">
+        <i class="material-icons">timer</i>
+      </button>
+      <button (click)="stopTimer(item.id)" *ngIf="timer" title="Stop" class="btn">
+        <i class="material-icons">timer_off</i>
+      </button>
+      <button (click)="resetTimer(item.id)" *ngIf="timer" title="Reset timer" class="btn">
+        <i class="material-icons">restore</i>
+      </button>
+    </div>
+  </div>
+  <div class="back">
+    <edit-form [editableNotification]="item" *ngIf="showEditableNotification"
+               (onFinishEdit)="finishEditNotification($event)">
+    </edit-form>
+  </div>
+</div>
+
+
+
+
+
+

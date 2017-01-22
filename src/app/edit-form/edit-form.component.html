@@ -1,0 +1,34 @@
+<form name="notification-form" class="form" (submit)="updateNotification($event)" *ngIf="editableNotification">
+
+  <div class="form__content">
+    <div class="form__input-group">
+      <label>Duration in minutes</label>
+      <input type="number" [(ngModel)]="editableNotification.minutes" name="time" min="1" required>
+    </div>
+    <div class="form__input-group">
+      <label>Text</label>
+      <input type="text" [(ngModel)]="editableNotification.text" name="text" required>
+    </div>
+    <div class="form__input-group">
+      <label>Image url</label>
+      <input type="text" [(ngModel)]="editableNotification.imageUrl" name="image-url" required>
+    </div>
+  </div>
+
+  <div class="form__image-preview">
+    <img [src]="editableNotification.imageUrl" alt="" *ngIf="editableNotification.imageUrl">
+  </div>
+
+  <div class="form__controls">
+    <button type="submit" class="form__button btn" title="Save">
+      <i class="material-icons">done</i>
+    </button>
+    <button type="button" class="form__button btn"
+            (click)="cancelEditNotification()"
+            title="Cancel">
+      <i class="material-icons">clear</i>
+    </button>
+  </div>
+
+</form>
+
