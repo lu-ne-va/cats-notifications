@@ -3,7 +3,7 @@
   <div class="form__content">
     <div class="form__input-group">
       <label>Duration in minutes</label>
-      <input type="number" [(ngModel)]="editableNotification.minutes" name="time" min="1" required>
+      <input type="number" [(ngModel)]="editableNotification.minutes" name="time" min="1" max="360" required>
     </div>
     <div class="form__input-group">
       <label>Text</label>
@@ -16,7 +16,10 @@
   </div>
 
   <div class="form__image-preview">
-    <img [src]="editableNotification.imageUrl" alt="" *ngIf="editableNotification.imageUrl">
+    <img [src]="editableNotification.imageUrl"
+         (load)="changeImageStatus(true)"
+         (error)="changeImageStatus(false)"
+         *ngIf="editableNotification.imageUrl">
   </div>
 
   <div class="form__controls">

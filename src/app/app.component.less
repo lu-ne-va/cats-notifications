@@ -20,3 +20,25 @@
   margin-bottom: 15px;
 }
 
+.notification {
+  position: relative;
+  display: flex;
+  border: 1px solid;
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #ffffff;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+
+  &_no-records {
+    background-image: url(http://iget.pw/m/images/meow_iconka/256x256/cat_eyes.png), url(http://37.media.tumblr.com/87f6afcad549820f61f3f252edc4a9ed/tumblr_miwms6qELP1qdyauqo2_500.gif);
+    filter: grayscale(100%);
+    background-size: auto 70%, auto 120%;
+    background-repeat: no-repeat, repeat-x;
+    background-position: right 30px center, center;
+    padding: 45px;
+  }
+}

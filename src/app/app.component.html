@@ -4,13 +4,15 @@
       <i class="material-icons">add</i>
     </button>
   </div>
-  <edit-form class="new" [editableNotification]="editableNotification"
+  <edit-form class="new"
+             [editableNotification]="editableNotification"
              *ngIf="editableNotification"
              (onFinishEdit)="saveNewNotification($event)">
   </edit-form>
 
   <div class="content__list">
     <notification-item *ngFor="let item of notificationList"
+                       [ngClass]="{removed: removed == item.id}"
                        [item]="item"
                        (onListChanged)="updateData($event)"
                        (onDelete)="deleteNotification($event)">
