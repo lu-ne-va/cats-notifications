@@ -48,7 +48,7 @@ export class NotificationItem {
         this.isTurned = false;
         setTimeout(() => {
             this.showEditableNotification = false;
-        }, 1000);
+        }, 400);
         this.onListChanged.emit();
     }
 
